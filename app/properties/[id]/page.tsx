@@ -1,13 +1,20 @@
 import Image from "next/image";
 import { ReservationSidebar } from "@/app/components/properties/ReservationSidebar";
 
-export default function PropertyDetailPage() {
+import { apiService } from "@/app/services/apiService";
+
+export default async function PropertyDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const property = await apiService.get(`/api/properties/${params.id}`);
   return (
     <main className="max-w-[1500px] mx-auto px-6 pb-6">
       <div className="w-full h-[54vh] mb-4 overflow-hidden rounded-xl relative">
         <Image
           fill
-          src="/beach1.jpg"
+          src={property.image_url}
           className="object-cover w-full h-full"
           alt="Beachc house"
         />
@@ -15,41 +22,37 @@ export default function PropertyDetailPage() {
 
       <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
         <div className="col-span-3 py-6 pr-6">
-          <h1 className="mb-4 text-4xl">Property name</h1>
+          <h1 className="mb-4 text-4xl">{property.title}</h1>
           <span className="mb-6 block text-lg text-gray-600">
-            4 guests - 2 bedrooms - 1 bathroom
+            {property.guests} guests - {property.bedrooms} bedrooms -{" "}
+            {property.bathrooms} bathroom
           </span>
 
           <hr />
 
           <div className="py-6 flex items-center space-x-4">
-            <Image
-              src="/profile_pic_1.jpg"
-              width={50}
-              height={50}
-              className="rounded-full"
-              alt="The user name"
-            />
+            {property.landlord.avatar_url && (
+              <Image
+                src={property.landlord.avatar_url}
+                width={50}
+                height={50}
+                className="rounded-full"
+                alt="The user name"
+              />
+            )}
 
             <p>
-              <span className="font-bold">John Doe</span> is your host
+              <span className="font-bold">{property.landlord.name}</span> is
+              your host
             </p>
           </div>
 
           <hr />
 
-          <p className="mt-6 text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+          <p className="mt-6 text-lg">{property.description}</p>
         </div>
 
-        <ReservationSidebar />
+        <ReservationSidebar property={property} />
       </div>
     </main>
   );
