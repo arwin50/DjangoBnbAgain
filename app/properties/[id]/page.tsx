@@ -19,7 +19,7 @@ export default async function PropertyDetailPage({
           fill
           src={property.image_url}
           className="object-cover w-full h-full"
-          alt="Beachc house"
+          alt="Beach house"
         />
       </div>
 
