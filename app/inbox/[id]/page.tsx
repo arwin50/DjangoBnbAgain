@@ -37,6 +37,7 @@ export default async function ConversationPage({
       <ConversationDetail
         conversation={conversation.conversation}
         userId={userId}
+        messages={conversation.messages}
         token={token}
       />
     </main>
