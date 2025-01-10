@@ -1,8 +1,14 @@
+"use client";
 import { CiSearch } from "react-icons/ci";
+import useSearchModal from "@/app/hooks/useSearchModal";
 
 export const SearchFilters = () => {
+  const searchModal = useSearchModal();
   return (
-    <div className="h-[48px] lg:h-[64px] flex items-center justify-between border rounded-full">
+    <div
+      onClick={() => searchModal.open('location')}
+      className="h-[48px] lg:h-[64px] flex items-center justify-between border rounded-full"
+    >
       <div className="hidden lg:block">
         <div className="flex items-center justify-between">
           <div className="cursor-pointer h-[48px] lg:h-[64px] px-8 flex flex-col justify-center rounded-full hover:bg-gray-100">
