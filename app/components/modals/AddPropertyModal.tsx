@@ -68,7 +68,7 @@ export const AddPropertyModal = () => {
       if (response.success) {
         console.log("skibidi is sigma");
 
-        router.push("/");
+        router.push("/?added=true");
         addPropertyModal.close();
       } else {
         const tmpErrors: string[] = Object.values(response).map(
